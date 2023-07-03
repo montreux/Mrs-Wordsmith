@@ -1,0 +1,108 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  mrswordsmith-technical-test-api
+
+  Sample SAM Template for mrswordsmith-technical-test-api
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 30
+
+Resources:
+  AccountCreateFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: account-api/
+      Handler: accountApiHandler.create
+      Runtime: nodejs18.x
+      Architectures:
+        - arm64
+      Events:
+        AccountCreate:
+          Type: HttpApi
+          Properties:
+            Path: /account
+            Method: post
+    Metadata: # Manage esbuild properties
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints:
+          - accountApiHandler.ts
+
+  AccountUpdateFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: account-api/
+      Handler: accountApiHandler.update
+      Runtime: nodejs18.x
+      Architectures:
+        - arm64
+      Events:
+        AccountUpdate:
+          Type: HttpApi
+          Properties:
+            Path: /account/{id}
+            Method: put
+    Metadata: # Manage esbuild properties
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints:
+          - accountApiHandler.ts
+
+  AccountGetFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: account-api/
+      Handler: accountApiHandler.get
+      Runtime: nodejs18.x
+      Architectures:
+        - arm64
+      Events:
+        AccountGet:
+          Type: HttpApi
+          Properties:
+            Path: /account/{id}
+            Method: get
+    Metadata: # Manage esbuild properties
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints:
+          - accountApiHandler.ts
+
+  AccountDeleteFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: account-api/
+      Handler: accountApiHandler.remove
+      Runtime: nodejs18.x
+      Architectures:
+        - arm64
+      Events:
+        AccountDelete:
+          Type: HttpApi
+          Properties:
+            Path: /account/{id}
+            Method: delete
+    Metadata: # Manage esbuild properties
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints:
+          - accountApiHandler.ts
+# Outputs:
+#   ApiURL:
+#     Description: "API endpoint URL for Prod environment"
+#     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/account/"
