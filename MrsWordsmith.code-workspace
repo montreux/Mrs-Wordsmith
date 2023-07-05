@@ -1,0 +1,18 @@
+{
+  "folders": [
+    {
+      "path": "."
+    },
+    {
+      "name": "techTest",
+      "path": "techTest"
+    },
+    {
+      "name": "account-api",
+      "path": "mrswordsmith-technical-test-api/account-api"
+    }
+  ],
+  "settings": {
+    "jest.disabledWorkspaceFolders": ["MrsWordsmith"]
+  }
+}
